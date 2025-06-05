@@ -41,7 +41,7 @@
     "@scalar/types": "workspace:*"
   },
   "devDependencies": {
-    "@docusaurus/types": "^3.6.0",
+    "@docusaurus/types": "^3.8.0",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
     "path": "^0.12.7",
