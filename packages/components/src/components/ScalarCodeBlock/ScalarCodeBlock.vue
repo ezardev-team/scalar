@@ -55,24 +55,20 @@ const isContentValid = computed(() => {
     class="scalar-code-block custom-scroll min-h-12 focus-visible:outline"
     tabindex="0">
     <div
-      v-if="expand"
-      class="scalar-expand">
+      v-if="expand || copy"
+      class="scalar-code-actions">
       <button
-        v-if="isContentValid"
+        v-if="expand && isContentValid"
         class="expand-button"
         type="button"
         @click="expandInNewWindow(prettyPrintJson(props.content))">
         <span class="sr-only">View in new window</span>
         <ScalarIcon
-          icon="ExternalLink"
+          icon="Expand"
           size="md" />
       </button>
-    </div>
-    <div
-      v-if="copy"
-      class="scalar-code-copy">
       <button
-        v-if="isContentValid"
+        v-if="copy && isContentValid"
         class="copy-button"
         type="button"
         @click="copyToClipboard(prettyPrintJson(props.content))">
@@ -111,8 +107,8 @@ const isContentValid = computed(() => {
   border-radius: 0;
   width: fit-content;
 }
-/* Copy Button */
-.scalar-code-copy {
+/* Action Buttons */
+.scalar-code-actions {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
@@ -143,7 +139,7 @@ const isContentValid = computed(() => {
     opacity 0.15s ease-in-out,
     color 0.15s ease-in-out;
 }
-.scalar-code-copy,
+.scalar-code-actions,
 .copy-button,
 .expand-button {
   /* Pass down the background color */

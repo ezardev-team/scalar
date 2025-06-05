@@ -34,25 +34,21 @@ const getCurrentContent = () => {
     class="body-raw grid min-h-0 overflow-hidden p-px outline-none has-[:focus-visible]:outline">
     <div
       v-if="getCurrentContent()"
-      class="expand-code">
+      class="scalar-code-actions">
       <button
         class="expand-button"
         type="button"
-        @click="expandInNewWindow(getCurrentContent())">
-        <span class="sr-only">Expand content</span>
+        @click="expandInNewWindow(prettyPrintJson(props.content))">
+        <span class="sr-only">View in new window</span>
         <ScalarIcon
-          icon="ExternalLink"
+          icon="Expand"
           size="md" />
       </button>
-    </div>
-    <!-- Copy button -->
-    <div
-      v-if="getCurrentContent()"
-      class="scalar-code-copy">
+      <!-- Copy button -->
       <button
         class="copy-button"
         type="button"
-        @click="copyToClipboard(getCurrentContent())">
+        @click="copyToClipboard(prettyPrintJson(props.content))">
         <span class="sr-only">Copy content</span>
         <ScalarIcon
           icon="Clipboard"
@@ -83,8 +79,8 @@ const getCurrentContent = () => {
   width: fit-content;
 }
 
-/* Copy Button Styles */
-.scalar-code-copy {
+/* Action Buttons Styles */
+.scalar-code-actions {
   align-items: flex-start;
   display: flex;
   position: absolute;
@@ -94,9 +90,11 @@ const getCurrentContent = () => {
   pointer-events: none;
   position: sticky;
   transform: translateX(-6px);
+  gap: 4px;
 }
 
-.copy-button {
+.copy-button,
+.expand-button {
   align-items: center;
   display: flex;
   background-color: var(--scalar-background-1);
@@ -113,13 +111,16 @@ const getCurrentContent = () => {
     color 0.15s ease-in-out;
 }
 
-/* Show button on container hover */
+/* Show buttons on container hover */
 .body-raw:hover .copy-button,
-.copy-button:focus-visible {
+.body-raw:hover .expand-button,
+.copy-button:focus-visible,
+.expand-button:focus-visible {
   opacity: 1;
 }
 
-.copy-button:hover {
+.copy-button:hover,
+.expand-button:hover {
   color: var(--scalar-color-1);
 }
 </style>

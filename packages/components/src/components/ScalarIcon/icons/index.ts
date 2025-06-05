@@ -32,6 +32,7 @@ export const ICONS = [
   'Email',
   'Error',
   'Example',
+  'Expand',
   'ExternalLink',
   'FilterList',
   'Folder',
