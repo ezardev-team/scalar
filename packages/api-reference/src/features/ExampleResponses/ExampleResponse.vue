@@ -25,6 +25,7 @@ defineProps<{
         mode: 'read',
       })
     "
+    :expand="true"
     lang="json" />
 
   <div

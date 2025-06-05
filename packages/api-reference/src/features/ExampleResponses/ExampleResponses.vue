@@ -152,6 +152,7 @@ const showSchema = ref(false)
             :id="id"
             class="-outline-offset-2"
             :content="currentResponseWithExample"
+            :expand="true"
             lang="json" />
           <ExampleResponse
             v-else

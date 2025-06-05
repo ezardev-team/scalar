@@ -3,6 +3,7 @@ import { ScalarIcon } from '@scalar/components'
 import { prettyPrintJson } from '@scalar/oas-utils/helpers'
 import { useCodeMirror, type CodeMirrorLanguage } from '@scalar/use-codemirror'
 import { useClipboard } from '@scalar/use-hooks/useClipboard'
+import { useExpand } from '@scalar/use-hooks/useExpand'
 import { ref, toRef } from 'vue'
 
 const props = defineProps<{
@@ -12,6 +13,7 @@ const props = defineProps<{
 
 const codeMirrorRef = ref<HTMLDivElement | null>(null)
 const { copyToClipboard } = useClipboard()
+const { expandInNewWindow } = useExpand()
 
 const { codeMirror } = useCodeMirror({
   codeMirrorRef,
@@ -30,6 +32,19 @@ const getCurrentContent = () => {
 <template>
   <div
     class="body-raw grid min-h-0 overflow-hidden p-px outline-none has-[:focus-visible]:outline">
+    <div
+      v-if="getCurrentContent()"
+      class="expand-code">
+      <button
+        class="expand-button"
+        type="button"
+        @click="expandInNewWindow(getCurrentContent())">
+        <span class="sr-only">Expand content</span>
+        <ScalarIcon
+          icon="ExternalLink"
+          size="md" />
+      </button>
+    </div>
     <!-- Copy button -->
     <div
       v-if="getCurrentContent()"

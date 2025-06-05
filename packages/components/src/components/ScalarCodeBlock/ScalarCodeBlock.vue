@@ -2,6 +2,7 @@
 import { standardLanguages, syntaxHighlight } from '@scalar/code-highlight'
 import { prettyPrintJson } from '@scalar/oas-utils/helpers'
 import { useClipboard } from '@scalar/use-hooks/useClipboard'
+import { useExpand } from '@scalar/use-hooks/useExpand'
 import { computed } from 'vue'
 
 import { ScalarIcon } from '../ScalarIcon'
@@ -39,6 +40,7 @@ const highlightedCode = computed(() => {
 })
 
 const { copyToClipboard } = useClipboard()
+const { expandInNewWindow } = useExpand()
 
 const isContentValid = computed(() => {
   return (
@@ -47,46 +49,6 @@ const isContentValid = computed(() => {
     props.content !== '404 Not Found'
   )
 })
-
-/**
- * 새창에서 코드 내용을 보여주는 함수
- */
-const openInNewWindow = () => {
-  const content = prettyPrintJson(props.content)
-  const newWindow = window.open('', '_blank')
-
-  if (newWindow) {
-    newWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Code Preview</title>
-        <style>
-          body {
-            font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
-            margin: 20px;
-            background: #f8f9fa;
-            line-height: 1.5;
-          }
-          pre {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-          }
-        </style>
-      </head>
-      <body>
-        <pre>${content}</pre>
-      </body>
-      </html>
-    `)
-    newWindow.document.close()
-  }
-}
 </script>
 <template>
   <div
@@ -99,7 +61,7 @@ const openInNewWindow = () => {
         v-if="isContentValid"
         class="expand-button"
         type="button"
-        @click="openInNewWindow">
+        @click="expandInNewWindow(prettyPrintJson(props.content))">
         <span class="sr-only">View in new window</span>
         <ScalarIcon
           icon="ExternalLink"
