@@ -992,9 +992,6 @@ importers:
       '@scalar/import':
         specifier: workspace:*
         version: link:../import
-      '@scalar/json-viewer':
-        specifier: workspace:*
-        version: link:../json-viewer
       '@scalar/oas-utils':
         specifier: workspace:*
         version: link:../oas-utils
@@ -1529,15 +1526,15 @@ importers:
       '@scalar/icons':
         specifier: workspace:*
         version: link:../icons
-      '@scalar/json-viewer':
-        specifier: workspace:*
-        version: link:../json-viewer
       '@scalar/oas-utils':
         specifier: workspace:*
         version: link:../oas-utils
       '@scalar/themes':
         specifier: workspace:*
         version: link:../themes
+      '@scalar/use-codemirror':
+        specifier: workspace:*
+        version: link:../use-codemirror
       '@scalar/use-hooks':
         specifier: workspace:*
         version: link:../use-hooks
@@ -1766,34 +1763,6 @@ importers:
       vite:
         specifier: catalog:*
         version: 5.4.19(@types/node@22.15.3)(lightningcss@1.30.1)(terser@5.31.2)
-
-  packages/json-viewer:
-    dependencies:
-      '@scalar/icons':
-        specifier: workspace:*
-        version: link:../icons
-      '@scalar/use-codemirror':
-        specifier: workspace:*
-        version: link:../use-codemirror
-      vue:
-        specifier: catalog:*
-        version: 3.5.12(typescript@5.6.2)
-    devDependencies:
-      '@scalar/build-tooling':
-        specifier: workspace:*
-        version: link:../build-tooling
-      '@vitejs/plugin-vue':
-        specifier: catalog:*
-        version: 5.2.0(vite@5.4.19(@types/node@22.15.3)(lightningcss@1.30.1)(terser@5.31.2))(vue@3.5.12(typescript@5.6.2))
-      '@vitest/coverage-v8':
-        specifier: ^1.6.0
-        version: 1.6.0(vitest@1.6.0(@types/node@22.15.3)(jsdom@25.0.1)(lightningcss@1.30.1)(terser@5.31.2))
-      vite:
-        specifier: catalog:*
-        version: 5.4.19(@types/node@22.15.3)(lightningcss@1.30.1)(terser@5.31.2)
-      vitest:
-        specifier: catalog:*
-        version: 1.6.0(@types/node@22.15.3)(jsdom@25.0.1)(lightningcss@1.30.1)(terser@5.31.2)
 
   packages/mock-server:
     dependencies:
@@ -2330,9 +2299,6 @@ importers:
       '@replit/codemirror-css-color-picker':
         specifier: ^6.3.0
         version: 6.3.0(@codemirror/language@6.10.7)(@codemirror/state@6.5.0)(@codemirror/view@6.35.3)
-      '@scalar/components':
-        specifier: workspace:*
-        version: link:../components
       codemirror:
         specifier: ^6.0.0
         version: 6.0.1(@lezer/common@1.2.3)

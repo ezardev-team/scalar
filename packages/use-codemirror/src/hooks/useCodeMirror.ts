@@ -25,11 +25,12 @@ import {
   placeholder as placeholderExtension,
 } from '@codemirror/view'
 import { history, historyKeymap } from '@codemirror/commands'
-import { ScalarIcon } from '@scalar/components'
-import { type MaybeRefOrGetter, type Ref, computed, h, onBeforeUnmount, ref, render, toValue, watch } from 'vue'
+
+import { type MaybeRefOrGetter, type Ref, computed, onBeforeUnmount, ref, toValue, watch } from 'vue'
 
 import { customTheme } from '../themes'
 import type { CodeMirrorLanguage } from '../types'
+import { createIconElement } from '../utils/icons'
 import { variables } from './variables'
 
 type BaseParameters = {
@@ -394,13 +395,11 @@ function getCodeMirrorExtensions({
     extensions.push(
       foldGutter({
         markerDOM: (open) => {
-          const icon = document.createElement('div')
+          const icon = createIconElement(
+            open ? 'ChevronDown' : 'ChevronRight',
+            'md'
+          )
           icon.classList.add('cm-foldMarker')
-          const vnode = h(ScalarIcon, {
-            icon: open ? 'ChevronDown' : 'ChevronRight',
-            size: 'md',
-          })
-          render(vnode, icon)
           return icon
         },
       }),
@@ -414,13 +413,11 @@ function getCodeMirrorExtensions({
       extensions.push(
         foldGutter({
           markerDOM: (open) => {
-            const icon = document.createElement('div')
+            const icon = createIconElement(
+              open ? 'ChevronDown' : 'ChevronRight',
+              'md'
+            )
             icon.classList.add('cm-foldMarker')
-            const vnode = h(ScalarIcon, {
-              icon: open ? 'ChevronDown' : 'ChevronRight',
-              size: 'md',
-            })
-            render(vnode, icon)
             return icon
           },
         }),

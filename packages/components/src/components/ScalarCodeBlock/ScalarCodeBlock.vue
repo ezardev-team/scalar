@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { standardLanguages, syntaxHighlight } from '@scalar/code-highlight'
-import { ScalarJsonViewerModal } from '@scalar/json-viewer'
 import { prettyPrintJson } from '@scalar/oas-utils/helpers'
 import { useClipboard } from '@scalar/use-hooks/useClipboard'
 import { computed, ref } from 'vue'
 
 import { ScalarIcon } from '../ScalarIcon'
+import { ScalarJsonViewerModal } from '../ScalarJsonViewer'
 
 /**
  * Uses highlight.js for syntax highlighting

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ScalarIcon } from '@scalar/components'
-import { ScalarJsonViewerModal } from '@scalar/json-viewer'
+import { ScalarIcon, ScalarJsonViewerModal } from '@scalar/components'
 import { prettyPrintJson } from '@scalar/oas-utils/helpers'
 import { useCodeMirror, type CodeMirrorLanguage } from '@scalar/use-codemirror'
 import { useClipboard } from '@scalar/use-hooks/useClipboard'
