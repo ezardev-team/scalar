@@ -1,51 +1,63 @@
 <template>
-  <ScalarTeleport>
-    <ScalarModal
-      :state="modalState"
-      :title="title || 'JSON Viewer'"
-      size="lg"
-      class="scalar-json-viewer-modal">
-      <div class="scalar-json-viewer-modal__content">
-        <ScalarJsonViewer
-          :data="data"
-          :content="content"
-          :title="title"
-          :show-toolbar="false"
-          :show-copy-button="showCopyButton"
-          :show-fullscreen-button="false"
-          :show-line-numbers="showLineNumbers"
-          :fold-gutter="foldGutter"
-          :editable="editable"
-          :placeholder="placeholder"
-          :prettify="prettify"
-          :indent="indent"
-          @change="emit('change', $event)"
-          @copy="emit('copy', $event)" />
-      </div>
-      <div class="scalar-json-viewer-modal__footer">
-        <div class="scalar-json-viewer-modal__actions">
-          <ScalarButton
-            v-if="showCopyButton"
-            variant="outlined"
-            @click="handleCopy">
-            Copy JSON
-          </ScalarButton>
-          <ScalarButton
-            variant="solid"
+  <Teleport to="body">
+    <div
+      v-if="modalState.open"
+      class="scalar-json-viewer-modal-overlay"
+      @click.self="modalState.hide()">
+      <div class="scalar-json-viewer-modal-dialog">
+        <div class="scalar-json-viewer-modal-header">
+          <h3 class="scalar-json-viewer-modal-title">
+            {{ title || 'JSON Viewer' }}
+          </h3>
+          <button
+            class="scalar-json-viewer-modal-close"
+            type="button"
             @click="modalState.hide()">
-            Close
-          </ScalarButton>
+            ×
+          </button>
+        </div>
+        <div class="scalar-json-viewer-modal__content">
+          <ScalarJsonViewer
+            :data="data"
+            :content="content"
+            :title="title"
+            :show-toolbar="false"
+            :show-copy-button="showCopyButton"
+            :show-fullscreen-button="false"
+            :show-line-numbers="showLineNumbers"
+            :fold-gutter="foldGutter"
+            :editable="editable"
+            :placeholder="placeholder"
+            :prettify="prettify"
+            :indent="indent"
+            @change="emit('change', $event)"
+            @copy="emit('copy', $event)" />
+        </div>
+        <div class="scalar-json-viewer-modal__footer">
+          <div class="scalar-json-viewer-modal__actions">
+            <ScalarButton
+              v-if="showCopyButton"
+              variant="outlined"
+              @click="handleCopy">
+              Copy JSON
+            </ScalarButton>
+            <ScalarButton
+              variant="solid"
+              @click="modalState.hide()">
+              Close
+            </ScalarButton>
+          </div>
         </div>
       </div>
-    </ScalarModal>
-  </ScalarTeleport>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import { Teleport, computed, watch } from 'vue'
 
 import { ScalarButton } from '../ScalarButton'
-import { ScalarModal, useModal } from '../ScalarModal'
+import { useModal } from '../ScalarModal'
 import ScalarJsonViewer from './ScalarJsonViewer.vue'
 import type { ScalarJsonViewerModalProps } from './types'
 
@@ -125,20 +137,73 @@ const handleCopy = async () => {
 </script>
 
 <style scoped>
-/* Ensure JSON Viewer Modal appears above API Client Modal */
-.scalar-json-viewer-modal :deep(.scalar-modal-layout) {
-  z-index: 999999 !important;
+/* Modal Overlay - covers entire screen */
+.scalar-json-viewer-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 2147483647 !important; /* Maximum z-index */
 }
 
-/* Additional override for scalar-app context */
-:global(.scalar.scalar-app)
-  .scalar-json-viewer-modal
-  :deep(.scalar-modal-layout) {
-  z-index: 99999 !important;
+/* Modal Dialog */
+.scalar-json-viewer-modal-dialog {
+  background: var(--scalar-background-1);
+  border-radius: 8px;
+  box-shadow: var(--scalar-shadow-2);
+  width: 90vw;
+  max-width: 800px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Modal Header */
+.scalar-json-viewer-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--scalar-border-color);
+}
+
+.scalar-json-viewer-modal-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--scalar-color-1);
+}
+
+.scalar-json-viewer-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--scalar-color-3);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.scalar-json-viewer-modal-close:hover {
+  background-color: var(--scalar-background-3);
+}
+
+/* Remove all old z-index overrides that were trying to override ScalarModal */
+.scalar-json-viewer-modal-container {
+  display: none;
 }
 
 .scalar-json-viewer-modal__content {
-  height: 60vh;
+  flex: 1;
+  overflow: hidden;
+  padding: 16px;
   min-height: 400px;
 }
 
@@ -151,12 +216,41 @@ const handleCopy = async () => {
 .scalar-json-viewer-modal__footer {
   display: flex;
   justify-content: flex-end;
-  padding: 16px 0 0;
+  padding: 16px;
   border-top: 1px solid var(--scalar-border-color);
 }
 
 .scalar-json-viewer-modal__actions {
   display: flex;
   gap: 8px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.scalar-json-viewer-modal-overlay {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.scalar-json-viewer-modal-dialog {
+  animation: slideIn 0.3s ease-out;
 }
 </style>
