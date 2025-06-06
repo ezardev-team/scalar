@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { standardLanguages, syntaxHighlight } from '@scalar/code-highlight'
+import { ScalarJsonViewerModal } from '@scalar/json-viewer'
 import { prettyPrintJson } from '@scalar/oas-utils/helpers'
 import { useClipboard } from '@scalar/use-hooks/useClipboard'
-import { useExpand } from '@scalar/use-hooks/useExpand'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import { ScalarIcon } from '../ScalarIcon'
 
@@ -40,7 +40,6 @@ const highlightedCode = computed(() => {
 })
 
 const { copyToClipboard } = useClipboard()
-const { expandInNewWindow } = useExpand()
 
 const isContentValid = computed(() => {
   return (
@@ -49,6 +48,15 @@ const isContentValid = computed(() => {
     props.content !== '404 Not Found'
   )
 })
+
+// JSON Viewer Modal state
+const showJsonModal = ref(false)
+
+const openJsonViewer = () => {
+  console.log('OpenJsonViewer clicked, current state:', showJsonModal.value)
+  showJsonModal.value = true
+  console.log('New state:', showJsonModal.value)
+}
 </script>
 <template>
   <div
@@ -61,7 +69,7 @@ const isContentValid = computed(() => {
         v-if="expand && isContentValid"
         class="expand-button"
         type="button"
-        @click="expandInNewWindow(prettyPrintJson(props.content))">
+        @click="openJsonViewer">
         <span class="sr-only">View in new window</span>
         <ScalarIcon
           icon="Expand"
@@ -81,6 +89,14 @@ const isContentValid = computed(() => {
     <pre
       class="scalar-codeblock-pre"
       v-html="highlightedCode" />
+
+    <!-- JSON Viewer Modal -->
+    <ScalarJsonViewerModal
+      v-model="showJsonModal"
+      :content="prettyPrintJson(props.content)"
+      :editable="false"
+      :prettify="true"
+      @copy="copyToClipboard" />
   </div>
 </template>
 <style>

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { ScalarIcon } from '@scalar/components'
+import { ScalarJsonViewerModal } from '@scalar/json-viewer'
 import { prettyPrintJson } from '@scalar/oas-utils/helpers'
 import { useCodeMirror, type CodeMirrorLanguage } from '@scalar/use-codemirror'
 import { useClipboard } from '@scalar/use-hooks/useClipboard'
-import { useExpand } from '@scalar/use-hooks/useExpand'
 import { ref, toRef } from 'vue'
 
 const props = defineProps<{
@@ -13,7 +13,6 @@ const props = defineProps<{
 
 const codeMirrorRef = ref<HTMLDivElement | null>(null)
 const { copyToClipboard } = useClipboard()
-const { expandInNewWindow } = useExpand()
 
 const { codeMirror } = useCodeMirror({
   codeMirrorRef,
@@ -28,6 +27,15 @@ const { codeMirror } = useCodeMirror({
 const getCurrentContent = () => {
   return codeMirror.value?.state.doc.toString() || ''
 }
+
+// JSON Viewer Modal state
+const showJsonModal = ref(false)
+
+const openJsonViewer = () => {
+  console.log('OpenJsonViewer clicked, current state:', showJsonModal.value)
+  showJsonModal.value = true
+  console.log('New state:', showJsonModal.value)
+}
 </script>
 <template>
   <div
@@ -38,8 +46,8 @@ const getCurrentContent = () => {
       <button
         class="expand-button"
         type="button"
-        @click="expandInNewWindow(prettyPrintJson(props.content))">
-        <span class="sr-only">View in new window</span>
+        @click="openJsonViewer">
+        <span class="sr-only">View in JSON Viewer</span>
         <ScalarIcon
           icon="Expand"
           size="md" />
@@ -61,6 +69,14 @@ const getCurrentContent = () => {
       <!-- CodeMirror container -->
       <div ref="codeMirrorRef" />
     </div>
+
+    <!-- JSON Viewer Modal -->
+    <ScalarJsonViewerModal
+      v-model="showJsonModal"
+      :content="prettyPrintJson(props.content)"
+      :editable="false"
+      :prettify="true"
+      @copy="copyToClipboard" />
   </div>
 </template>
 <style scoped>
