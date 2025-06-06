@@ -1,45 +1,48 @@
 <template>
-  <ScalarModal
-    :state="modalState"
-    :title="title || 'JSON Viewer'"
-    size="lg">
-    <div class="scalar-json-viewer-modal__content">
-      <ScalarJsonViewer
-        :data="data"
-        :content="content"
-        :title="title"
-        :show-toolbar="false"
-        :show-copy-button="showCopyButton"
-        :show-fullscreen-button="false"
-        :show-line-numbers="showLineNumbers"
-        :fold-gutter="foldGutter"
-        :editable="editable"
-        :placeholder="placeholder"
-        :prettify="prettify"
-        :indent="indent"
-        @change="emit('change', $event)"
-        @copy="emit('copy', $event)" />
-    </div>
-    <div class="scalar-json-viewer-modal__footer">
-      <div class="scalar-json-viewer-modal__actions">
-        <ScalarButton
-          v-if="showCopyButton"
-          variant="outlined"
-          @click="handleCopy">
-          Copy JSON
-        </ScalarButton>
-        <ScalarButton
-          variant="solid"
-          @click="modalState.hide()">
-          Close
-        </ScalarButton>
+  <ScalarTeleport>
+    <ScalarModal
+      :state="modalState"
+      :title="title || 'JSON Viewer'"
+      size="lg"
+      class="scalar-json-viewer-modal">
+      <div class="scalar-json-viewer-modal__content">
+        <ScalarJsonViewer
+          :data="data"
+          :content="content"
+          :title="title"
+          :show-toolbar="false"
+          :show-copy-button="showCopyButton"
+          :show-fullscreen-button="false"
+          :show-line-numbers="showLineNumbers"
+          :fold-gutter="foldGutter"
+          :editable="editable"
+          :placeholder="placeholder"
+          :prettify="prettify"
+          :indent="indent"
+          @change="emit('change', $event)"
+          @copy="emit('copy', $event)" />
       </div>
-    </div>
-  </ScalarModal>
+      <div class="scalar-json-viewer-modal__footer">
+        <div class="scalar-json-viewer-modal__actions">
+          <ScalarButton
+            v-if="showCopyButton"
+            variant="outlined"
+            @click="handleCopy">
+            Copy JSON
+          </ScalarButton>
+          <ScalarButton
+            variant="solid"
+            @click="modalState.hide()">
+            Close
+          </ScalarButton>
+        </div>
+      </div>
+    </ScalarModal>
+  </ScalarTeleport>
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { Teleport, computed, watch } from 'vue'
 
 import { ScalarButton } from '../ScalarButton'
 import { ScalarModal, useModal } from '../ScalarModal'
@@ -122,6 +125,18 @@ const handleCopy = async () => {
 </script>
 
 <style scoped>
+/* Ensure JSON Viewer Modal appears above API Client Modal */
+.scalar-json-viewer-modal :deep(.scalar-modal-layout) {
+  z-index: 999999 !important;
+}
+
+/* Additional override for scalar-app context */
+:global(.scalar.scalar-app)
+  .scalar-json-viewer-modal
+  :deep(.scalar-modal-layout) {
+  z-index: 99999 !important;
+}
+
 .scalar-json-viewer-modal__content {
   height: 60vh;
   min-height: 400px;

@@ -53,9 +53,7 @@ const isContentValid = computed(() => {
 const showJsonModal = ref(false)
 
 const openJsonViewer = () => {
-  console.log('OpenJsonViewer clicked, current state:', showJsonModal.value)
   showJsonModal.value = true
-  console.log('New state:', showJsonModal.value)
 }
 </script>
 <template>
