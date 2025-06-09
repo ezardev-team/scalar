@@ -212,7 +212,7 @@ const shouldShowParameter = computed(() => {
   outline: none;
   text-align: left;
   position: relative;
-  align-items: baseline;
+  align-items: center;
 }
 
 .parameter-item-trigger-open {

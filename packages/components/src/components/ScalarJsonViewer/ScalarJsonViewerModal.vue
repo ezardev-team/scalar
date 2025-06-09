@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { Teleport, computed, watch } from 'vue'
+import { Teleport, computed, onMounted, onUnmounted, watch } from 'vue'
 
 import { ScalarButton } from '../ScalarButton'
 import { useModal } from '../ScalarModal'
@@ -78,6 +78,38 @@ const emit = defineEmits<{
 }>()
 
 const modalState = useModal()
+
+// Handle ESC key to close modal
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && modalState.open) {
+    event.preventDefault()
+    event.stopPropagation()
+    modalState.hide()
+  }
+}
+
+// Add/remove event listeners
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
+
+// Watch for modalState to prevent body scroll
+watch(
+  () => modalState.open,
+  (isOpen) => {
+    if (isOpen) {
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Restore body scroll when modal is closed
+      document.body.style.overflow = ''
+    }
+  },
+)
 
 // Watch for modelValue changes to sync with modal state
 watch(
@@ -149,6 +181,7 @@ const handleCopy = async () => {
   align-items: center !important;
   justify-content: center !important;
   z-index: 2147483647 !important; /* Maximum z-index */
+  overscroll-behavior: contain;
 }
 
 /* Modal Dialog */
@@ -202,9 +235,10 @@ const handleCopy = async () => {
 
 .scalar-json-viewer-modal__content {
   flex: 1;
-  overflow: hidden;
+  overflow: auto;
   padding: 16px;
   min-height: 400px;
+  overscroll-behavior: contain;
 }
 
 .scalar-json-viewer-modal__content :deep(.scalar-json-viewer) {
