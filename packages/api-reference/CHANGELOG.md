@@ -1,5 +1,23 @@
 # @scalar/api-reference
 
+## 1.31.8
+
+### Patch Changes
+
+- Updated dependencies [11fabae]
+  - @scalar/openapi-parser@0.16.0
+  - @scalar/workspace-store@0.3.2
+  - @scalar/api-client@2.5.5
+  - @scalar/oas-utils@0.4.4
+
+## 1.31.7
+
+### Patch Changes
+
+- 24cfdfe: feat: adds multiple of in schema property heading
+- Updated dependencies [373214a]
+  - @scalar/workspace-store@0.3.1
+
 ## 1.31.6
 
 ### Patch Changes
