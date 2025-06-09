@@ -35,14 +35,21 @@
         </div>
         <div class="scalar-json-viewer-modal__footer">
           <div class="scalar-json-viewer-modal__actions">
+            <div class="scalar-json-viewer-modal__actions-left">
+              <ScalarButton
+                v-if="showCopyButton"
+                variant="outlined"
+                @click="handleCopy">
+                Copy
+              </ScalarButton>
+              <ScalarButton
+                variant="outlined"
+                @click="handleDownload">
+                Download
+              </ScalarButton>
+            </div>
             <ScalarButton
-              v-if="showCopyButton"
               variant="outlined"
-              @click="handleCopy">
-              Copy JSON
-            </ScalarButton>
-            <ScalarButton
-              variant="solid"
               @click="modalState.hide()">
               Close
             </ScalarButton>
@@ -57,6 +64,7 @@
 import { Teleport, computed, onMounted, onUnmounted, watch } from 'vue'
 
 import { ScalarButton } from '../ScalarButton'
+import { ScalarIconButton } from '../ScalarIconButton'
 import { useModal } from '../ScalarModal'
 import ScalarJsonViewer from './ScalarJsonViewer.vue'
 import type { ScalarJsonViewerModalProps } from './types'
@@ -166,6 +174,18 @@ const handleCopy = async () => {
     console.error('Failed to copy to clipboard:', error)
   }
 }
+
+const handleDownload = () => {
+  const blob = new Blob([formattedJson.value], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `${props.title || 'data'}.json`
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
+}
 </script>
 
 <style scoped>
@@ -255,6 +275,13 @@ const handleCopy = async () => {
 }
 
 .scalar-json-viewer-modal__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.scalar-json-viewer-modal__actions-left {
   display: flex;
   gap: 8px;
 }
