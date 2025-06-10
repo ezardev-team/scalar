@@ -28,3 +28,37 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* 특정 드랍다운 메뉴 ID를 가진 요소들 - 오버레이를 위한 강력한 설정 */
+[id*="headlessui-menu-items"] {
+  
+  /* 절대 위치 지정으로 부모 컨테이너 제약 벗어나기 */
+  position: absolute !important;
+  
+  /* 오버플로우 가시화 */
+  overflow: visible !important;
+  
+  /* 드랍다운이 화면 밖으로 나가지 않도록 제한 */
+  max-height: 400px !important;
+  
+  /* 스크롤 가능하게 설정 */
+  overflow-y: auto !important;
+  
+  /* 배경 설정 */
+  background: white !important;
+  
+  /* 그림자 효과 */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  
+  /* 테두리 */
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  
+  /* 최소 너비 */
+  min-width: 250px !important;
+}
+
+/* 드랍다운 메뉴가 포함된 모든 부모 요소들 */
+*:has([id*="headlessui-menu-items"]) {
+  overflow: visible !important;
+}

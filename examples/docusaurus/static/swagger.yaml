@@ -1,0 +1,1458 @@
+basePath: /api/v1
+consumes:
+  - application/json
+definitions:
+  externalKr.KrProspectusItem:
+    properties:
+      assets:
+        description: 집합투자기구의 투자대상
+        type: string
+      corp_name:
+        description: 집합투자업자
+        type: string
+      fee_rule:
+        description: 보수 및 수수료에 관한 사항
+        type: string
+      fund_code:
+        description: DART 펀드 코드
+        type: string
+      fund_manager_name:
+        description: 운용전문인력
+        type: string
+      fund_name:
+        description: 집합투자기구의 명칭
+        type: string
+      fund_type:
+        description: 집합투자기구의 종류 및 형태
+        type: string
+      goal:
+        description: 집합투자기구의 투자목적
+        type: string
+      history:
+        description: 집합투자기구의 연혁
+        type: string
+      risks:
+        description: 집합투자기구의 투자위험
+        type: string
+      strategy:
+        description: 투자전략
+        type: string
+      structure:
+        description: 집합투자기구의 구조
+        type: string
+      symbol:
+        description: 종목 코드 (6자리)
+        type: string
+      tax_rule:
+        description: 이익 배분 및 과세에 관한 사항
+        type: string
+      trade_rule:
+        description: 매입, 환매, 전환 절차 및 기준가격 적용 기준
+        type: string
+      trust_period:
+        description: 집합투자기구의 신탁계약기간
+        type: string
+      updated_at:
+        description: 공시문서 업데이트일자 (YYYYMMDD)
+        type: string
+    type: object
+  externalKr.KrProspectusResponse:
+    properties:
+      data:
+        description: 펀드 정보 객체의 배열
+        items:
+          $ref: '#/definitions/externalKr.KrProspectusItem'
+        type: array
+      page:
+        description: 현재 페이지 번호
+        type: integer
+      page_size:
+        description: 페이지당 데이터 수
+        type: integer
+      total:
+        description: 전체 데이터 수
+        type: integer
+      total_pages:
+        description: 전체 페이지 수
+        type: integer
+    type: object
+  externalUs.AnnualReportContent:
+    properties:
+      Item 1:
+        description: Business
+        type: string
+      Item 2:
+        description: Properties
+        type: string
+      Item 3:
+        description: Legal Proceedings
+        type: string
+      Item 4:
+        description: Mine Safety Disclosures
+        type: string
+      Item 5:
+        description: Market for Registrant's Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities
+        type: string
+      Item 6:
+        description: Selected Financial Data (prior to February 2021)
+        type: string
+      Item 7:
+        description: Management's Discussion and Analysis of Financial Condition and Results of Operations
+        type: string
+      Item 7A:
+        description: Quantitative and Qualitative Disclosures about Market Risk
+        type: string
+      Item 8:
+        description: Financial Statements and Supplementary Data
+        type: string
+      Item 9:
+        description: Changes in and Disagreements with Accountants on Accounting and Financial Disclosure
+        type: string
+      Item 9A:
+        description: Controls and Procedures
+        type: string
+      Item 9B:
+        description: Other Information
+        type: string
+      Item 9C:
+        description: Disclosure Regarding Foreign Jurisdictions that Prevent Inspections
+        type: string
+      Item 10:
+        description: Directors, Executive Officers and Corporate Governance
+        type: string
+      Item 11:
+        description: Executive Compensation
+        type: string
+      Item 12:
+        description: Ownership of Certain Beneficial Owners and Management and Related Stockholder Matters
+        type: string
+      Item 13:
+        description: Certain RelationsPrincipal Accountant Fees and Services
+        type: string
+      Item 15:
+        description: Exhibits and Financial Statement Schedules
+        type: string
+      Item 16:
+        description: Form 10-K Summary
+        type: string
+      Item 1A:
+        description: Risk Factors
+        type: string
+      Item 1B:
+        description: Unresolved Staff Comments
+        type: string
+      Item 1C:
+        description: Cybersecurity
+        type: string
+    type: object
+  externalUs.AnnualReportResponse:
+    properties:
+      amendments:
+        items:
+          $ref: '#/definitions/mongodbClient.MongoDBDocument'
+        type: array
+      content:
+        $ref: '#/definitions/externalUs.AnnualReportContent'
+      exhibits:
+        items:
+          $ref: '#/definitions/mongodbClient.Exhibit'
+        type: array
+      financial-statement:
+        items:
+          $ref: '#/definitions/mongodbClient.FinancialStatement'
+        type: array
+      metadata:
+        additionalProperties:
+          type: string
+        type: object
+      summary:
+        type: string
+    type: object
+  externalUs.CurrentReportContent:
+    properties:
+      Item 1.01:
+        description: Entry into a Material Definitive Agreement
+        type: string
+        x-nullable: true
+      Item 1.02:
+        description: Termination of a Material Definitive Agreement
+        type: string
+        x-nullable: true
+      Item 1.03:
+        description: Bankruptcy or Receivership
+        type: string
+        x-nullable: true
+      Item 1.04:
+        description: Mine Safety - Reporting of Shutdowns and Patterns of Violations
+        type: string
+        x-nullable: true
+      Item 1.05:
+        description: Material Cybersecurity Incidents
+        type: string
+        x-nullable: true
+      Item 2.01:
+        description: Completion of Acquisition or Disposition of Assets
+        type: string
+        x-nullable: true
+      Item 2.02:
+        description: Results of Operations and Financial Condition
+        type: string
+        x-nullable: true
+      Item 2.03:
+        description: Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement
+        type: string
+        x-nullable: true
+      Item 2.04:
+        description: Triggering Events That Accelerate or Increase a Direct Financial Obligation
+        type: string
+        x-nullable: true
+      Item 2.05:
+        description: Cost Associated with Exit or Disposal Activities
+        type: string
+        x-nullable: true
+      Item 2.06:
+        description: Material Impairments
+        type: string
+        x-nullable: true
+      Item 3.01:
+        description: Notice of Delisting or Failure to Satisfy a Continued Listing Rule or Standard
+        type: string
+        x-nullable: true
+      Item 3.02:
+        description: Unregistered Sales of Equity Securities
+        type: string
+        x-nullable: true
+      Item 3.03:
+        description: Material Modifications to Rights of Security Holders
+        type: string
+        x-nullable: true
+      Item 4.01:
+        description: Changes in Registrant's Certifying Accountant
+        type: string
+        x-nullable: true
+      Item 4.02:
+        description: Non-Reliance on Previously Issued Financial Statements
+        type: string
+        x-nullable: true
+      Item 5.01:
+        description: Changes in Control of Registrant
+        type: string
+        x-nullable: true
+      Item 5.02:
+        description: Departure of Directors or Certain Officers
+        type: string
+        x-nullable: true
+      Item 5.03:
+        description: Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year
+        type: string
+        x-nullable: true
+      Item 5.04:
+        description: Temporary Suspension of Trading Under Registrant's Employee Benefit Plans
+        type: string
+        x-nullable: true
+      Item 5.05:
+        description: Amendments to the Registrant's Code of Ethics, or Waiver of a Provision of the Code of Ethics
+        type: string
+        x-nullable: true
+      Item 5.06:
+        description: Change in Shell Company Status
+        type: string
+        x-nullable: true
+      Item 5.07:
+        description: Submission of Matters to a Vote of Security Holders
+        type: string
+        x-nullable: true
+      Item 5.08:
+        description: Shareholder Nominations Pursuant to Exchange Act Rule 14a-11
+        type: string
+        x-nullable: true
+      Item 6.01:
+        description: ABS Informational and Computational Material
+        type: string
+        x-nullable: true
+      Item 6.02:
+        description: Change of Servicer or Trustee
+        type: string
+        x-nullable: true
+      Item 6.03:
+        description: Change in Credit Enhancement or Other External Support
+        type: string
+        x-nullable: true
+      Item 6.04:
+        description: Failure to Make a Required Distribution
+        type: string
+        x-nullable: true
+      Item 6.05:
+        description: Securities Act Updating Disclosure
+        type: string
+        x-nullable: true
+      Item 6.06:
+        description: Static Pool
+        type: string
+        x-nullable: true
+      Item 7.01:
+        description: Regulation FD Disclosure
+        type: string
+        x-nullable: true
+      Item 8.01:
+        description: Other Events
+        type: string
+        x-nullable: true
+      Item 9.01:
+        description: Financial Statements and Exhibits
+        type: string
+        x-nullable: true
+    type: object
+  externalUs.CurrentReportResponse:
+    properties:
+      amendments:
+        items:
+          $ref: '#/definitions/mongodbClient.MongoDBDocument'
+        type: array
+      content:
+        $ref: '#/definitions/externalUs.CurrentReportContent'
+      exhibits:
+        items:
+          $ref: '#/definitions/mongodbClient.Exhibit'
+        type: array
+      financial-statement:
+        items:
+          $ref: '#/definitions/mongodbClient.FinancialStatement'
+        type: array
+      metadata:
+        additionalProperties:
+          type: string
+        type: object
+      summary:
+        type: string
+    type: object
+  externalUs.Exhibits:
+    properties:
+      pages:
+        items:
+          $ref: '#/definitions/mongodbClient.Page'
+        type: array
+      title:
+        type: string
+      type:
+        type: string
+    type: object
+  externalUs.InstitutionalItem:
+    properties:
+      cik:
+        description: 기관투자자 CIK 식별번호
+        example: CIK0001166559
+        type: string
+      last_updated_quarter:
+        description: 최근 업데이트 분기
+        example: 1
+        type: integer
+      last_updated_year:
+        description: 최근 업데이트 연도
+        example: 2024
+        type: integer
+      name:
+        description: 기관투자자 이름
+        example: Vanguard Group
+        type: string
+    type: object
+  externalUs.InstitutionalPortfolioItem:
+    properties:
+      amount:
+        description: 보유 수량
+        example: 1000000
+        type: number
+      amount_type:
+        description: '보유 단위 유형 (SH: Shares, PRN: Principal Amount)'
+        example: SH
+        type: string
+      cusip:
+        description: CUSIP 식별자
+        example: "037833100"
+        type: string
+      investment_discretion:
+        description: 투자 재량권 구분
+        example: SOLE
+        type: string
+      isin:
+        description: ISIN 식별자 (nullable)
+        type: string
+        x-nullable: true
+      name:
+        description: 보유 종목명
+        example: Apple Inc.
+        type: string
+      symbol:
+        description: Symbol 식별자 (nullable)
+        example: AAPL
+        type: string
+        x-nullable: true
+      va_none:
+        description: 의결권 없는 수량
+        example: 50000
+        type: number
+      va_shared:
+        description: 공동 의결권 수
+        example: 50000
+        type: number
+      va_sole:
+        description: 단독 의결권 수
+        example: 900000
+        type: number
+      value:
+        description: '총 시가 (단위: 1,000 USD)'
+        example: 1500000
+        type: number
+    type: object
+  externalUs.PortfolioItem:
+    properties:
+      cusip:
+        description: (nullable) CUSIP 식별자
+        example: "037833100"
+        type: string
+      isin:
+        description: (nullable) ISIN 식별자
+        example: US0378331005
+        type: string
+      market_value:
+        description: 해당 종목의 시가총액 (USD 기준)
+        example: 15000000
+        type: number
+      name:
+        description: 보유 종목의 영문명
+        example: Apple Inc.
+        type: string
+      shares_number:
+        description: 보유 주식 수
+        example: 100000
+        type: integer
+      symbol:
+        description: 종목 심볼
+        example: AAPL
+        type: string
+      weight_percentage:
+        description: 전체 펀드 자산 대비 해당 종목의 비중 (%)
+        example: 5.67
+        type: number
+    type: object
+  externalUs.QuarterlyReportContent:
+    properties:
+      Part 1:
+        $ref: '#/definitions/externalUs.QuarterlyReportContentPart1'
+        description: Financial Information
+      Part 2:
+        $ref: '#/definitions/externalUs.QuarterlyReportContentPart2'
+        description: Other Information
+    type: object
+  externalUs.QuarterlyReportContentPart1:
+    properties:
+      Item 1:
+        description: Legal Proceedings
+        type: string
+      Item 2:
+        description: Management’s Discussion and Analysis of Financial Condition and Results of Operations
+        type: string
+      Item 3:
+        description: Quantitative and Qualitative Disclosures About Market Risk
+        type: string
+      Item 4:
+        description: Controls and Procedures
+        type: string
+    type: object
+  externalUs.QuarterlyReportContentPart2:
+    properties:
+      Item 1:
+        description: Legal Proceedings
+        type: string
+      Item 1A:
+        description: Risk Factors
+        type: string
+      Item 2:
+        description: Unregistered Sales of Equity Securities and Use of Proceeds
+        type: string
+      Item 3:
+        description: Defaults Upon Senior Securities
+        type: string
+      Item 4:
+        description: Mine Safety Disclosures
+        type: string
+      Item 5:
+        description: Other Information
+        type: string
+      Item 6:
+        description: Exhibits
+        type: string
+    type: object
+  externalUs.QuarterlyReportResponse:
+    properties:
+      content:
+        $ref: '#/definitions/externalUs.QuarterlyReportContent'
+      cover:
+        additionalProperties: true
+        type: object
+      exhibits:
+        $ref: '#/definitions/externalUs.Exhibits'
+      financial-statement:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      metadata:
+        $ref: '#/definitions/externalUs.ReportMetadata'
+      summary:
+        type: string
+    type: object
+  externalUs.ReportMetadata:
+    properties:
+      accession_number:
+        description: SEC 문서 고유 식별자
+        type: string
+      central_index_key:
+        description: SEC 중앙 인덱스 키(CIK)
+        type: string
+      company_name:
+        description: 보고서를 제출한 회사명
+        type: string
+      filling_date:
+        description: SEC에 실제 제출된 날짜
+        type: string
+      organization_name:
+        description: SEC 분류상의 산업 섹터 이름
+        type: string
+      period_of_report:
+        description: 보고서가 다루는 회계 연도 종료일
+        type: string
+      sec_act:
+        description: '적용된 SEC 법률 (예: 1933 Act, 1934 Act 등)'
+        type: string
+      standard_industrial_classification:
+        description: 표준 산업 분류 코드 및 설명
+        type: string
+      submission_type:
+        description: '제출된 보고서 종류 (예: 10-K, 10-Q 등)'
+        type: string
+    type: object
+  externalUs.UsProspectusData:
+    properties:
+      date:
+        description: 설정일
+        type: string
+      fees:
+        description: 수수료 구조
+        type: string
+      name:
+        description: 펀드의 공식 명칭
+        type: string
+      objective:
+        description: 투자 목적
+        type: string
+      performance:
+        description: 성과 정보
+        type: string
+      risks:
+        description: 위험 요소
+        type: string
+      strategies:
+        description: 투자 전략
+        type: string
+      symbol:
+        description: 펀드의 거래 심볼
+        type: string
+    type: object
+  externalUs.UsProspectusResponse:
+    properties:
+      data:
+        description: 펀드 데이터 배열
+        items:
+          $ref: '#/definitions/externalUs.UsProspectusData'
+        type: array
+      limit:
+        description: 페이지당 데이터 수
+        type: integer
+      page:
+        description: 현재 페이지 번호
+        type: integer
+      total:
+        description: 전체 데이터 수
+        type: integer
+      total_pages:
+        description: 전체 페이지 수
+        type: integer
+    type: object
+  models.InternalServerErrorException:
+    properties:
+      code:
+        example: "999"
+        type: string
+      message:
+        example: Internal Server Error
+        type: string
+    type: object
+  models.InvalidBodyException:
+    properties:
+      code:
+        example: "904"
+        type: string
+      message:
+        example: 'Invalid body parameter: content'
+        type: string
+    type: object
+  models.InvalidParamsException:
+    properties:
+      code:
+        example: "903"
+        type: string
+      message:
+        example: 'Invalid parameter: year'
+        type: string
+    type: object
+  models.InvalidSymbolException:
+    properties:
+      code:
+        example: "902"
+        type: string
+      message:
+        example: 'Invalid symbol: (INVALID)'
+        type: string
+    type: object
+  models.InvalidUuidException:
+    properties:
+      code:
+        example: "911"
+        type: string
+      message:
+        example: Invalid UUID
+        type: string
+    type: object
+  models.NoSymbolException:
+    properties:
+      code:
+        example: "901"
+        type: string
+      message:
+        example: No symbol
+        type: string
+    type: object
+  models.PermissionDeniedException:
+    properties:
+      code:
+        example: "907"
+        type: string
+      message:
+        example: There is no permission
+        type: string
+    type: object
+  models.RateLimitExceededException:
+    properties:
+      code:
+        example: "912"
+        type: string
+      message:
+        example: Rate Limit Exceeded
+        type: string
+    type: object
+  models.ResourceNotFoundException:
+    properties:
+      code:
+        example: "905"
+        type: string
+      message:
+        example: 'Not found: annual report'
+        type: string
+    type: object
+  models.UnauthorizedUserException:
+    properties:
+      code:
+        example: "908"
+        type: string
+      message:
+        example: Unauthorized User
+        type: string
+    type: object
+  models.UnmarshalErrorException:
+    properties:
+      code:
+        example: "906"
+        type: string
+      message:
+        example: 'Error during unmarshal: invalid character ''}'' after object key'
+        type: string
+    type: object
+  models.ValidErrorException:
+    properties:
+      code:
+        example: "910"
+        type: string
+      message:
+        example: Validation error
+        type: string
+    type: object
+  mongodbClient.Content:
+    properties:
+      original_file_path:
+        type: string
+      type:
+        type: string
+      value: {}
+    type: object
+  mongodbClient.Exhibit:
+    properties:
+      pages:
+        items:
+          $ref: '#/definitions/mongodbClient.Page'
+        type: array
+      title:
+        type: string
+      type:
+        type: string
+    type: object
+  mongodbClient.FinancialStatement:
+    properties:
+      Table:
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+      Title:
+        type: string
+    type: object
+  mongodbClient.MongoDBDocument:
+    properties:
+      amendments:
+        items:
+          $ref: '#/definitions/mongodbClient.MongoDBDocument'
+        type: array
+      content:
+        additionalProperties:
+          items:
+            $ref: '#/definitions/mongodbClient.Content'
+          type: array
+        type: object
+      exhibits:
+        items:
+          $ref: '#/definitions/mongodbClient.Exhibit'
+        type: array
+      filing_info:
+        additionalProperties:
+          type: string
+        type: object
+      financial_statements:
+        items:
+          $ref: '#/definitions/mongodbClient.FinancialStatement'
+        type: array
+      id:
+        type: string
+      metadata:
+        additionalProperties:
+          type: string
+        type: object
+      parsing_results:
+        additionalProperties:
+          type: boolean
+        type: object
+      summary:
+        type: string
+    type: object
+  mongodbClient.Page:
+    properties:
+      content:
+        items:
+          $ref: '#/definitions/mongodbClient.Content'
+        type: array
+    type: object
+info:
+  contact:
+    email: help@ezar.co.kr
+    name: Lucy API Support Team
+  termsOfService: https://www.ezar.co.kr/terms/usage
+  title: Lucy API Docs
+  version: 1.0.0
+  description: |+
+    # Getting Start
+
+    ## Introduce
+
+    Lucy API 문서입니다. 현재는 은행, 증권사 등 기업고객만 사용가능합니다.
+    무료테스트 계정 생성은 당사 세일즈팀(help@ezar.co.kr)으로 연락주시면 신속히 안내드리겠습니다.
+
+    인증을 위한 X-API-Key는 Lucy API 요청 허가(Authorization) 여부를 판단하는 데 사용하는 정보인 ID와 키(Key)를 갖습니다.
+    Public B2B 서비스를 가입할때 제공드린 API-Key를 header에 추가해서 요청바랍니다.
+
+paths:
+  /kr/prospectus:
+    get:
+      consumes:
+        - application/json
+      description: 이 API는 금융감독원의 DART 전자공시시스템에 등록된 펀드 관련 공시문서 원문과 메타데이터를 추출하여, 인공지능 모델이 학습할 수 있도록 정규화된 JSON 형태로 제공합니다. 문서의 핵심 텍스트(본문), 공시 메타정보(작성일자, 공시유형 등), 분류용 태그 등이 포함되며, 공시 데이터는 페이징을 통해 순차적으로 제공됩니다.
+      parameters:
+        - description: 종목 코드. 입력 시 해당 종목의 펀드 정보만 조회됩니다. 콤마(',')로 구분하여 여러 종목 코드를 입력할 수 있습니다.
+          example: 005930,000660
+          in: query
+          name: symbol
+          type: string
+        - default: 1
+          description: 페이지 번호
+          in: query
+          name: page
+          type: integer
+        - default: 100
+          description: 페이지당 조회 수
+          in: query
+          maximum: 100
+          minimum: 1
+          name: page_size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/externalKr.KrProspectusResponse'
+        "901":
+          description: No symbol
+          schema:
+            $ref: '#/definitions/models.NoSymbolException'
+        "902":
+          description: Invalid symbol
+          schema:
+            $ref: '#/definitions/models.InvalidSymbolException'
+        "903":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/models.InvalidParamsException'
+        "904":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.InvalidBodyException'
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 최신 펀드 투자 설명서
+      tags:
+        - AI 학습 데이터 - 한국
+  /us/annual-report/{year}/{symbol}/{option}:
+    get:
+      consumes:
+        - application/json
+      description: SEC에 제출된 10-K 보고서를 사전 파싱한 결과를 반환합니다.<br />해당 API는 특정 종목(ticker)의 최근 10-K 보고서 파싱 결과를 제공하며, 커버 정보, 주요 재무제표, 조직 개요, 감사 정보 등을 포함합니다.
+      parameters:
+        - description: 연도
+          example: "2024"
+          in: path
+          name: year
+          required: true
+          type: string
+        - description: 종목 코드
+          example: AAPL
+          in: path
+          name: symbol
+          required: true
+          type: string
+        - description: 조회 옵션
+          enum:
+            - content
+            - amendments
+            - summary
+            - exhibits
+            - financial-statement
+            - metadata
+          in: path
+          name: option
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/externalUs.AnnualReportResponse'
+        "901":
+          description: No symbol
+          schema:
+            $ref: '#/definitions/models.NoSymbolException'
+        "902":
+          description: Invalid symbol
+          schema:
+            $ref: '#/definitions/models.InvalidSymbolException'
+        "903":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/models.InvalidParamsException'
+        "904":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.InvalidBodyException'
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 연례보고서 (10-K)
+      tags:
+        - AI 학습 데이터 - 미국
+  /us/current-report/{symbol}:
+    get:
+      consumes:
+        - application/json
+      description: 종목(symbol)의 수시보고서 제출일 기준으로 시작일과 종료일 범위 조회를 지원합니다. <br /> 조회 기간은 최대 3개월까지 가능합니다.
+      parameters:
+        - description: 종목 코드
+          example: AAPL
+          in: path
+          name: symbol
+          required: true
+          type: string
+        - default: 한달 전
+          description: 시작 제출일 (YYYYMMDD)
+          example: "20250101"
+          format: date
+          in: query
+          name: start_date
+          type: string
+        - default: 오늘
+          description: 종료 제출일 (YYYYMMDD)
+          example: "20250131"
+          format: date
+          in: query
+          name: end_date
+          type: string
+        - default: 20
+          description: 최대 조회 건수
+          example: 20
+          in: query
+          maximum: 100
+          minimum: 1
+          name: limit
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            items:
+              $ref: '#/definitions/externalUs.CurrentReportResponse'
+            type: array
+        "901":
+          description: No symbol
+          schema:
+            $ref: '#/definitions/models.NoSymbolException'
+        "902":
+          description: Invalid symbol
+          schema:
+            $ref: '#/definitions/models.InvalidSymbolException'
+        "903":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/models.InvalidParamsException'
+        "904":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.InvalidBodyException'
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 수시보고서 목록 (8-K)
+      tags:
+        - AI 학습 데이터 - 미국
+  /us/institutional/{cik}/{year}/{quarter}:
+    get:
+      consumes:
+        - application/json
+      description: Form 13F는 일정 규모 이상의 기관투자자(운용사 등)가 미국 증권거래위원회(SEC)에 분기별로 제출하는 보유 종목 목록 보고서입니다. <br /> API는 기관 투자자(CIK) 기준으로 특정 분기(year, quarter)의 보유 종목 상세 내역을 반환합니다.
+      parameters:
+        - description: 기관 투자자(CIK) 식별번호
+          in: path
+          name: cik
+          required: true
+          type: string
+        - description: 분기 연도
+          in: path
+          name: year
+          required: true
+          type: integer
+        - description: 분기
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+          in: path
+          name: quarter
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            items:
+              $ref: '#/definitions/externalUs.InstitutionalPortfolioItem'
+            type: array
+        "901":
+          description: No symbol
+          schema:
+            $ref: '#/definitions/models.NoSymbolException'
+        "902":
+          description: Invalid symbol
+          schema:
+            $ref: '#/definitions/models.InvalidSymbolException'
+        "903":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/models.InvalidParamsException'
+        "904":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.InvalidBodyException'
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 기관투자자 포트폴리오 (13F-HR)
+      tags:
+        - AI 학습 데이터 - 미국
+  /us/institutional/list:
+    get:
+      consumes:
+        - application/json
+      description: 전체 기관투자자 목록을 반환합니다.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            items:
+              $ref: '#/definitions/externalUs.InstitutionalItem'
+            type: array
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 기관투자자 목록
+      tags:
+        - AI 학습 데이터 - 미국
+  /us/portfolio:
+    get:
+      consumes:
+        - application/json
+      description: ETF 또는 뮤추얼 펀드의 NPORT-P 보고서에 포함된 종목별 보유 내역을 제공합니다.<br />NPORT-P는 미국 SEC가 요구하는 월간 포트폴리오 공개 보고서로, 각 종목의 보유 수량, 비중, 시가총액 등을 포함합니다.
+      parameters:
+        - description: 펀드 심볼. 입력 시 해당 펀드의 포트폴리오 정보만 조회됩니다.<br />콤마(',')로 구분하여 최대 10개까지 입력할 수 있습니다.
+          example: SPY,QQQ
+          in: query
+          name: symbol
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            additionalProperties:
+              items:
+                $ref: '#/definitions/externalUs.PortfolioItem'
+              type: array
+            type: object
+        "901":
+          description: No symbol
+          schema:
+            $ref: '#/definitions/models.NoSymbolException'
+        "902":
+          description: Invalid symbol
+          schema:
+            $ref: '#/definitions/models.InvalidSymbolException'
+        "903":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/models.InvalidParamsException'
+        "904":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.InvalidBodyException'
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 펀드 포트폴리오
+      tags:
+        - AI 학습 데이터 - 미국
+  /us/prospectus:
+    get:
+      consumes:
+        - application/json
+      description: 종목(symbol) 별 또는 전체 펀드 리스트 조회합니다.
+      parameters:
+        - description: 종목 코드 (콤마로 구분)
+          example: SPY,QQQ
+          in: query
+          items:
+            type: string
+          name: symbol
+          type: array
+        - default: 1
+          description: 페이지 번호
+          in: query
+          name: page
+          type: integer
+        - default: 100
+          description: 페이지당 조회 수
+          in: query
+          maximum: 100
+          minimum: 1
+          name: limit
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/externalUs.UsProspectusResponse'
+        "901":
+          description: No symbol
+          schema:
+            $ref: '#/definitions/models.NoSymbolException'
+        "902":
+          description: Invalid symbol
+          schema:
+            $ref: '#/definitions/models.InvalidSymbolException'
+        "903":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/models.InvalidParamsException'
+        "904":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.InvalidBodyException'
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 최신 펀드 투자 설명서
+      tags:
+        - AI 학습 데이터 - 미국
+  /us/quarterly-report/{year}/{quarter}/{symbol}/{option}:
+    get:
+      consumes:
+        - application/json
+      description: SEC에 제출된 10-Q 보고서를 사전 파싱한 결과를 반환합니다.<br />해당 API는 특정 종목(ticker)의 최근 10-Q 보고서 파싱 결과를 제공하며, 커버 정보, 주요 재무제표, 조직 개요, 감사 정보 등을 포함합니다.
+      parameters:
+        - description: 연도
+          example: "2024"
+          in: path
+          name: year
+          required: true
+          type: string
+        - description: 분기
+          enum:
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+          in: path
+          name: quarter
+          required: true
+          type: string
+        - description: 종목 코드
+          example: AAPL
+          in: path
+          name: symbol
+          required: true
+          type: string
+        - description: 조회 옵션
+          enum:
+            - cover
+            - content
+            - summary
+            - exhibits
+            - financial-statement
+            - metadata
+          in: path
+          name: option
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/externalUs.QuarterlyReportResponse'
+        "901":
+          description: No symbol
+          schema:
+            $ref: '#/definitions/models.NoSymbolException'
+        "902":
+          description: Invalid symbol
+          schema:
+            $ref: '#/definitions/models.InvalidSymbolException'
+        "903":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/models.InvalidParamsException'
+        "904":
+          description: Invalid body
+          schema:
+            $ref: '#/definitions/models.InvalidBodyException'
+        "905":
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/models.ResourceNotFoundException'
+        "906":
+          description: Unmarshal error
+          schema:
+            $ref: '#/definitions/models.UnmarshalErrorException'
+        "907":
+          description: Permission denied
+          schema:
+            $ref: '#/definitions/models.PermissionDeniedException'
+        "908":
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/models.UnauthorizedUserException'
+        "910":
+          description: Valid error
+          schema:
+            $ref: '#/definitions/models.ValidErrorException'
+        "911":
+          description: Invalid uuid
+          schema:
+            $ref: '#/definitions/models.InvalidUuidException'
+        "912":
+          description: Rate limit exceeded
+          schema:
+            $ref: '#/definitions/models.RateLimitExceededException'
+        "999":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.InternalServerErrorException'
+      security:
+        - ApiKeyAuth: []
+      summary: 분기보고서 (10-Q)
+      tags:
+        - AI 학습 데이터 - 미국
+produces:
+  - application/json
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: X-API-KEY
+    type: apiKey
+security:
+  - ApiKeyAuth: []
+swagger: "2.0"

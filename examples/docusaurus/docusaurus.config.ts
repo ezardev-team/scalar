@@ -73,7 +73,7 @@ const config: Config = {
         route: '/yaml-url',
         cdn: '/scalar/standalone.js',
         configuration: {
-          url: 'https://cdn.jsdelivr.net/npm/@scalar/galaxy/dist/latest.yaml',
+          url: '/swagger.yaml',
         },
       } as ScalarOptions,
     ],
